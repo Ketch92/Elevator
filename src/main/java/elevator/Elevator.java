@@ -3,7 +3,7 @@ package elevator;
 public abstract class Elevator implements Elevatable{
     private int capacity;
     private int floorPosition;
-
+    private Direction direction;
 
     @Override
     public void moveUp() {
