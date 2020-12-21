@@ -6,11 +6,11 @@ public class Floor {
     private String name;
     private int level;
     private List<Integer> queue;
-    private boolean isQueueEmpty;
 
     public Floor(int level, List<Integer> queue) {
         this.queue = queue;
         this.level = level;
+        name = "Level " + level;
     }
 
     public String getName() {
@@ -31,9 +31,5 @@ public class Floor {
 
     public void setQueue(List<Integer> queue) {
         this.queue = queue;
-    }
-
-    public boolean isQueueEmpty() {
-        return queue.isEmpty();
     }
 }
