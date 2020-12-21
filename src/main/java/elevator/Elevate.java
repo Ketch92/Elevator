@@ -1,6 +1,6 @@
 package elevator;
 
-public interface Elevatable {
+public interface Elevate {
     int MAXIMUM_CAPACITY = 5;
 
     void moveUp();

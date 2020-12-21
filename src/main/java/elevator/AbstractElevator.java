@@ -1,11 +1,10 @@
 package elevator;
 
 import building.Building;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractElevator implements Elevatable{
+public abstract class AbstractElevator implements Elevate {
     private List<Integer> containment;
     private int occupancy;
     private int floorPosition;
