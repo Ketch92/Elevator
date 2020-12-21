@@ -10,15 +10,6 @@ public class Elevator extends AbstractElevator {
     }
 
     @Override
-    public void moveUp() {
-    }
-
-    @Override
-    public void moveDown() {
-
-    }
-
-    @Override
     public void pickUp(Integer... persons) {
         int index = 0;
         while (hasSpace()) {

@@ -17,10 +17,14 @@ public abstract class AbstractElevator implements Elevate {
     }
 
     @Override
-    public abstract void moveUp();
+    public void moveUp() {
+        floorPosition++;
+    }
 
     @Override
-    public abstract void moveDown();
+    public void moveDown() {
+        floorPosition--;
+    }
 
     @Override
     public abstract void pickUp(Integer... persons);
