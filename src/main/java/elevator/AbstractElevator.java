@@ -6,14 +6,13 @@ import java.util.List;
 
 public abstract class AbstractElevator implements Elevate {
     private List<Integer> containment;
-    private int occupancy;
     private int floorPosition;
     private Direction direction;
     private Building building;
 
     public AbstractElevator(Building building){
         this.building = building;
-        containment = new ArrayList<>();
+        containment = new ArrayList<>(MAXIMUM_CAPACITY);
         direction = Direction.UP;
     }
 
@@ -32,20 +31,25 @@ public abstract class AbstractElevator implements Elevate {
     @Override
     public abstract boolean hasSpace();
 
+    public boolean containsPerson(Integer person) {
+        return containment.contains(person);
+    }
+
+    public Integer getPerson(Integer person) {
+        containment.remove(person);
+        return person;
+    }
+
+    public void addToContainment(Integer person) {
+        containment.add(person);
+    }
+
     public List<Integer> getContainment() {
         return containment;
     }
 
-    public void setContainment(List<Integer> containment) {
-        this.containment = containment;
-    }
-
     public int getOccupancy() {
-        return occupancy;
-    }
-
-    public void setOccupancy(int occupancy) {
-        this.occupancy = occupancy;
+        return containment.size();
     }
 
     public int getFloorPosition() {
