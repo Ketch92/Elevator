@@ -9,7 +9,7 @@ public interface Elevate {
 
     void pickUp(Integer... persons);
 
-    Integer[] lifted();
+    Integer lifted();
 
     boolean hasSpace();
 }
