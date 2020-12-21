@@ -18,6 +18,7 @@ public class Building {
         private Floor[] buildingLevels;
 
         public Building build() {
+            initFloors();
             return new Building(this);
         }
 
