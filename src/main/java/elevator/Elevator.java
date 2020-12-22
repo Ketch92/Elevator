@@ -28,9 +28,4 @@ public class Elevator extends AbstractElevator {
         }
         return -1;
     }
-
-    @Override
-    public boolean hasSpace() {
-        return getOccupancy() <= MAXIMUM_CAPACITY;
-    }
 }

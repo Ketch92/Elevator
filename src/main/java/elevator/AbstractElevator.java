@@ -33,7 +33,9 @@ public abstract class AbstractElevator implements Elevate {
     public abstract Integer lifted();
 
     @Override
-    public abstract boolean hasSpace();
+    public boolean hasSpace() {
+        return getOccupancy() < MAXIMUM_CAPACITY;
+    };
 
     public boolean containsPerson(Integer person) {
         return containment.contains(person);
