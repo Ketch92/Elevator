@@ -42,17 +42,14 @@ public class Building {
             return person;
         }
         
-        private Floor[] initFloors() {
-            Floor[] floors = new Floor[getFloorsNumbers()];
-            setFloors(floors);
-            return floors;
+        private void initFloors() {
+            buildingLevels = new Floor[getFloorsNumbers()];
+            setFloors(buildingLevels);
         }
         
         private void setFloors(Floor[] floors) {
-            int level = 0;
-            for (Floor floor : floors) {
-                floor = new Floor(level, buildQueue(level));
-                level++;
+            for (int i = 0; i < floors.length; i++) {
+                floors[i] = new Floor(i, buildQueue(i));
             }
         }
         
