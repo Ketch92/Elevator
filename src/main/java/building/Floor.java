@@ -7,6 +7,10 @@ public class Floor {
     private int level;
     private List<Integer> queue;
 
+    public Floor () {
+
+    }
+
     public Floor(int level, List<Integer> queue) {
         this.queue = queue;
         this.level = level;
