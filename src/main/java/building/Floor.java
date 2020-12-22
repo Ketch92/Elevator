@@ -12,6 +12,22 @@ public class Floor {
     this.level = level;
     name = "Level " + level;
   }
+  
+  public boolean pushToQueue(Integer person) {
+    if (person == null) {
+      return false;
+    }
+    queue.add(person);
+    return true;
+  }
+  
+  public boolean popFromQueue(Integer person) {
+    if (person == null || !queue.contains(person)) {
+      return false;
+    }
+    queue.remove(person);
+    return true;
+  }
 
   public String getName() {
     return name;
