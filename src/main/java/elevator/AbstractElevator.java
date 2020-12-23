@@ -35,7 +35,7 @@ public abstract class AbstractElevator implements Elevate {
     public abstract void pickUp(Integer... persons);
 
     @Override
-    public abstract Integer lifted();
+    public abstract List<Integer> lifted();
 
     @Override
     public boolean hasSpace() {

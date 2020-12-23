@@ -7,11 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ElevatorTest {
     private Floor floor;
-    private Elevator emptyElevator;
+    private Elevator elevator;
     
     @BeforeEach
     void setUp() {
@@ -20,37 +18,58 @@ class ElevatorTest {
     
     @Test
     void pickUpOccupancy() {
-        emptyElevator = new Elevator();
+        elevator = new Elevator();
         
         int expectedOccupancy = 0;
-        int actualOccupancy = emptyElevator.getOccupancy();
+        int actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     
-        emptyElevator.pickUp(3, 1);
+        elevator.pickUp(3, 1);
         expectedOccupancy = 2;
-        actualOccupancy = emptyElevator.getOccupancy();
+        actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     
-        emptyElevator.pickUp(9, 4, 3);
-        actualOccupancy = emptyElevator.getOccupancy();
+        elevator.pickUp(9, 4, 3);
+        actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
     
-        emptyElevator.pickUp(4);
-        actualOccupancy = emptyElevator.getOccupancy();
+        elevator.pickUp(4);
+        actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
     }
     
     @Test
     void pickUpWrongPersons() {
-        emptyElevator = new Elevator();
+        elevator = new Elevator();
         Integer[] persons = new Integer[]{0, 0, 0};
-        emptyElevator.pickUp(persons);
+        elevator.pickUp(persons);
         int expectedOccupancy = 0;
-        int actualOccupancy = emptyElevator.getOccupancy();
+        int actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     }
     
     @Test
     void lifted() {
+        elevator = new Elevator();
+        elevator.getContainment().addAll(List.of(2, 4, 4, 6));
+        elevator.setFloorPosition(4);
+        
+        List<Integer> liftedActual = elevator.lifted();
+        List<Integer> liftedExpected = List.of(4, 4);
+        Assertions.assertEquals(liftedExpected, liftedActual);
+        
+        elevator.setFloorPosition(6);
+        liftedActual = elevator.lifted();
+        liftedExpected = List.of(6);
+        Assertions.assertEquals(liftedExpected, liftedActual);
+        
+        elevator.setFloorPosition(2);
+        liftedActual = elevator.lifted();
+        liftedExpected = List.of(2);
+        Assertions.assertEquals(liftedExpected, liftedActual);
+        
+        int expectedEmptyOccupancy = 0;
+        int actualOccupancy = elevator.getOccupancy();
+        Assertions.assertEquals(expectedEmptyOccupancy, actualOccupancy);
     }
 }

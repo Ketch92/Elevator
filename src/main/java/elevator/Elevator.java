@@ -2,6 +2,10 @@ package elevator;
 
 import building.Building;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Elevator extends AbstractElevator {
     
     public Elevator() {
@@ -25,10 +29,12 @@ public class Elevator extends AbstractElevator {
     }
 
     @Override
-    public Integer lifted() {
-        if (containsPerson(getFloorPosition())) {
-            return getPerson(getFloorPosition());
+    public List<Integer> lifted() {
+        List<Integer> liftedPersons = new ArrayList<>();
+        while (containsPerson(getFloorPosition())) {
+            liftedPersons.add(getFloorPosition());
+            getContainment().remove(Integer.valueOf(getFloorPosition()));
         }
-        return -1;
+        return liftedPersons;
     }
 }
