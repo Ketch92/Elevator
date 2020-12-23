@@ -58,15 +58,22 @@ class ElevatorTest {
         List<Integer> liftedExpected = List.of(4, 4);
         Assertions.assertEquals(liftedExpected, liftedActual);
         
-        elevator.setFloorPosition(6);
-        liftedActual = elevator.lifted();
-        liftedExpected = List.of(6);
-        Assertions.assertEquals(liftedExpected, liftedActual);
+        elevator = new Elevator();
+        elevator.getContainment().addAll(List.of(1, 3, 4, 6, 8));
+        elevator.setFloorPosition(4);
         
-        elevator.setFloorPosition(2);
-        liftedActual = elevator.lifted();
-        liftedExpected = List.of(2);
-        Assertions.assertEquals(liftedExpected, liftedActual);
+        for (int i = 0; i < 10; i++) {
+            elevator.setFloorPosition(i);
+            if(elevator.getContainment().contains(i)) {
+                liftedActual = elevator.lifted();
+                liftedExpected = List.of(i);
+                Assertions.assertEquals(liftedExpected, liftedActual);
+                continue;
+            }
+            liftedActual = elevator.lifted();
+            liftedExpected = List.of();
+            Assertions.assertEquals(liftedExpected, liftedActual);
+        }
         
         int expectedEmptyOccupancy = 0;
         int actualOccupancy = elevator.getOccupancy();
