@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ElevatorTest {
     private Floor floor;
-    private Elevator elevator;
+    private Elevator emptyElevator;
     
     @BeforeEach
     void setUp() {
@@ -20,24 +20,34 @@ class ElevatorTest {
     
     @Test
     void pickUpOccupancy() {
-        elevator = new Elevator();
+        emptyElevator = new Elevator();
         
         int expectedOccupancy = 0;
-        int actualOccupancy = elevator.getOccupancy();
+        int actualOccupancy = emptyElevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
-        
-        elevator.pickUp(3, 1);
+    
+        emptyElevator.pickUp(3, 1);
         expectedOccupancy = 2;
-        actualOccupancy = elevator.getOccupancy();
+        actualOccupancy = emptyElevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
-        
-        elevator.pickUp(9, 4, 3);
-        actualOccupancy = elevator.getOccupancy();
+    
+        emptyElevator.pickUp(9, 4, 3);
+        actualOccupancy = emptyElevator.getOccupancy();
         Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
-        
-        elevator.pickUp(4);
-        actualOccupancy = elevator.getOccupancy();
+    
+        emptyElevator.pickUp(4);
+        actualOccupancy = emptyElevator.getOccupancy();
         Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
+    }
+    
+    @Test
+    void pickUpWrongPersons() {
+        emptyElevator = new Elevator();
+        Integer[] persons = new Integer[]{0, 0, 0};
+        emptyElevator.pickUp(persons);
+        int expectedOccupancy = 0;
+        int actualOccupancy = emptyElevator.getOccupancy();
+        Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     }
     
     @Test
