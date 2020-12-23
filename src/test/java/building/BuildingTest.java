@@ -16,7 +16,7 @@ class BuildingTest {
     }
     
     @Test
-    void testNumberOfFloors() {
+    void numberOfFloors() {
         for (int i = 0; i < 20; i++) {
             int actual = building.getBuildingLevels().length;
             if (actual < 5 || actual > 20) {
@@ -28,7 +28,22 @@ class BuildingTest {
     }
     
     @Test
-    void testSizeOfQueue() {
+    void levelNaming() {
+        int index = 0;
+        for (Floor floor : building.getBuildingLevels()) {
+            String expectedName = "Level " + index;
+            String actualName = floor.getName();
+            if (!actualName.equals(expectedName)) {
+                Assertions.fail("Unordered floor naming \n"
+                + "Expected: " + expectedName + "\n"
+                + "Actual: " + actualName);
+            }
+            index++;
+        }
+    }
+    
+    @Test
+    void sizeOfQueue() {
         for (int i = 0; i < 10; i++) {
             for (Floor floor : building.getBuildingLevels()) {
                 int actual = floor.getQueue().size();
@@ -43,7 +58,7 @@ class BuildingTest {
     }
     
     @Test
-    void testQueue() {
+    void queueElements() {
         for (int i = 0; i < building.getBuildingLevels().length; i++) {
             Floor floor = building.getBuildingLevels()[i];
             int actualLevel = floor.getLevel();
@@ -62,7 +77,7 @@ class BuildingTest {
     }
     
     @Test
-    void testNullContaining() {
+    void nullContaining() {
         for (Floor floor : building.getBuildingLevels()) {
             if (floor == null) {
                 Assertions.fail("A null floor was found in building");
