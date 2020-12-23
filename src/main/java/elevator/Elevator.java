@@ -3,7 +3,10 @@ package elevator;
 import building.Building;
 
 public class Elevator extends AbstractElevator {
-
+    
+    public Elevator() {
+    }
+    
     public Elevator(Building building) {
         super(building);
         setDirection(Direction.UP);

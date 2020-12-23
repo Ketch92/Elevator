@@ -9,6 +9,10 @@ public abstract class AbstractElevator implements Elevate {
     private int floorPosition;
     private Direction direction;
     private Building building;
+    
+    public AbstractElevator() {
+    
+    }
 
     public AbstractElevator(Building building){
         this.building = building;
