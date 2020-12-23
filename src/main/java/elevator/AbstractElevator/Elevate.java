@@ -1,4 +1,4 @@
-package elevator;
+package elevator.AbstractElevator;
 
 import java.util.List;
 

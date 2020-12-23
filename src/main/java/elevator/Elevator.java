@@ -1,6 +1,7 @@
 package elevator;
 
 import building.Building;
+import elevator.AbstractElevator.AbstractElevator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ public class Elevator extends AbstractElevator {
     
     public Elevator(Building building) {
         super(building);
-        setDirection(Direction.UP);
     }
 
     @Override
