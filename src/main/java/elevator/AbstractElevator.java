@@ -11,7 +11,8 @@ public abstract class AbstractElevator implements Elevate {
     private Building building;
     
     public AbstractElevator() {
-    
+        containment = new ArrayList<>(MAXIMUM_CAPACITY);
+        direction = Direction.UP;
     }
 
     public AbstractElevator(Building building){

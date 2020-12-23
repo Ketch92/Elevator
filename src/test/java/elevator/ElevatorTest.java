@@ -21,9 +21,23 @@ class ElevatorTest {
     @Test
     void pickUpOccupancy() {
         elevator = new Elevator();
+        
         int expectedOccupancy = 0;
         int actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
+        
+        elevator.pickUp(3, 1);
+        expectedOccupancy = 2;
+        actualOccupancy = elevator.getOccupancy();
+        Assertions.assertEquals(expectedOccupancy, actualOccupancy);
+        
+        elevator.pickUp(9, 4, 3);
+        actualOccupancy = elevator.getOccupancy();
+        Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
+        
+        elevator.pickUp(4);
+        actualOccupancy = elevator.getOccupancy();
+        Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
     }
     
     @Test

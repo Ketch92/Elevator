@@ -15,7 +15,7 @@ public class Elevator extends AbstractElevator {
     @Override
     public void pickUp(Integer... persons) {
         int index = 0;
-        while (hasSpace()) {
+        while (hasSpace() && index < persons.length) {
             if(getFloorPosition() == persons[index]) {
                 index++;
                 continue;
