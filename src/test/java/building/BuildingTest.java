@@ -60,4 +60,18 @@ class BuildingTest {
             }
         }
     }
+    
+    @Test
+    void testNullContaining() {
+        for (Floor floor : building.getBuildingLevels()) {
+            if (floor == null) {
+                Assertions.fail("A null floor was found in building");
+            }
+            for (Integer person : floor.getQueue()) {
+                if (person == null) {
+                    Assertions.fail("A null person was found in building " + floor.getName());
+                }
+            }
+        }
+    }
 }
