@@ -7,6 +7,8 @@ import java.util.List;
 
 public class Elevator extends AbstractElevator {
     
+    
+    
     @Override
     public void pickUp(Integer person) {
         if (hasSpace() && person != getFloorPosition()) {
