@@ -5,6 +5,8 @@ import building.Floor;
 import elevator.Elevator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.nio.charset.IllegalCharsetNameException;
+import java.util.List;
 import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
@@ -18,7 +20,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private JTextField elevatorContainmentTxt;
     private JTextArea buildingLevelsText;
     private int nextBtnCycle;
-    private int floorToRun;
+    private int upperFloorToRun;
+    private int lowerFloorToRun;
     
     public ElevatorSimulation() {
         initializeComponents();
@@ -41,6 +44,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void initializeComponents() {
         building = new Building.BuildingConstructor().build();
         elevator = new Elevator();
+        elevator.getContainment().add(0);
         
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -113,8 +117,30 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         switch (nextBtnCycle) {
             case 0:
                 pickUp();
+                release();
+                moveElevator();
                 break;
         }
+    }
+    
+    private void moveElevator() {
+        upperFloorToRun = Math.min(upperFloorToRun, elevator.getContainment()
+                .stream().max(Integer::compareTo).get());
+        lowerFloorToRun = Math.max(lowerFloorToRun, elevator.getContainment()
+                .stream().min(Integer::compareTo).get());
+        
+    }
+    
+    private void release() {
+        List<Integer> liftedList = elevator.lifted();
+        Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
+        if (!liftedList.isEmpty()) {
+            for (Integer person : liftedList) {
+                floor.pushToQueue(person);
+            }
+        }
+        updateElevatorTextField();
+        updateBuildingText();
     }
     
     private void pickUp() {
@@ -122,9 +148,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         while (elevator.hasSpace() && !floor.isEmptyQueue()) {
             elevator.pickUp(floor.pollPerson());
         }
-        floorToRun = Math.min(floorToRun, elevator.getContainment()
-                .stream().max(Integer::compareTo).get());
-        
         updateElevatorTextField();
         updateBuildingText();
     }
