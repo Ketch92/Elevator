@@ -5,7 +5,6 @@ import building.Floor;
 import elevator.Elevator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Queue;
 import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
@@ -19,7 +18,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private JTextField elevatorContainmentTxt;
     private JTextArea buildingLevelsText;
     private int nextBtnCycle;
-    private int maxLevelToRun;
+    private int floorToRun;
     
     public ElevatorSimulation() {
         initializeComponents();
@@ -41,7 +40,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
     private void initializeComponents() {
         building = new Building.BuildingConstructor().build();
-        elevator = new Elevator(building);
+        elevator = new Elevator();
         
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -64,9 +63,9 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         updateElevatorTextField();
         
         buildingLevelsText = new JTextArea();
-        updateText(buildingLevelsText);
         buildingLevelsText.setEditable(false);
         buildingLevelsText.setVisible(true);
+        updateBuildingText();
         
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Elevator");
@@ -83,13 +82,13 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         pack();
     }
     
-    private void updateText(JTextArea jTextArea) {
-        jTextArea.setText("");
+    private void updateBuildingText() {
+        buildingLevelsText.setText("");
         Floor[] buildingLevels = building.getBuildingLevels();
         for (int i = buildingLevels.length - 1; i >= 0; i--) {
             Floor floor = buildingLevels[i];
-            jTextArea.append(floor.getName() + " ");
-            jTextArea.append(floor.getQueue().toString() + "\n");
+            buildingLevelsText.append(floor.getName() + " ");
+            buildingLevelsText.append(floor.getQueue().toString() + "\n");
         }
     }
     
@@ -100,9 +99,9 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
     private void startOverButtonPerformed() {
         building = new Building.BuildingConstructor().build();
-        elevator = new Elevator(building);
+        elevator = new Elevator();
         updateElevatorTextField();
-        updateText(buildingLevelsText);
+        updateBuildingText();
         nextBtnCycle = 0;
     }
     
@@ -119,10 +118,14 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void pickUp() {
-        Queue<Integer> queue = building.getBuildingLevels()[elevator.getFloorPosition()].getQueue();
-        while (elevator.hasSpace() || !queue.isEmpty()) {
-            elevator.pickUp(queue.poll());
+        Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
+        while (elevator.hasSpace() && !floor.isEmptyQueue()) {
+            elevator.pickUp(floor.pollPerson());
         }
+        floorToRun = Math.min(floorToRun, elevator.getContainment()
+                .stream().max(Integer::compareTo).get());
+        
         updateElevatorTextField();
+        updateBuildingText();
     }
 }

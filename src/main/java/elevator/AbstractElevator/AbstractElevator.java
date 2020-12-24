@@ -7,15 +7,10 @@ import java.util.List;
 public abstract class AbstractElevator implements Elevate {
     private List<Integer> containment;
     private int floorPosition;
-    private Building building;
     
     public AbstractElevator() {
-        containment = new ArrayList<>(MAXIMUM_CAPACITY);
-    }
-
-    public AbstractElevator(Building building){
-        this.building = building;
-        containment = new ArrayList<>(MAXIMUM_CAPACITY);
+        containment = new ArrayList<>();
+        floorPosition = 0;
     }
 
     @Override
@@ -66,9 +61,5 @@ public abstract class AbstractElevator implements Elevate {
 
     public void setFloorPosition(int floorPosition) {
         this.floorPosition = floorPosition;
-    }
-
-    public Building getBuilding() {
-        return building;
     }
 }
