@@ -25,6 +25,10 @@ public class Floor {
         return queue.poll();
     }
     
+    public boolean isEmptyQueue() {
+        return queue.isEmpty();
+    }
+    
     public String getName() {
         return name;
     }
