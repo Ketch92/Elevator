@@ -21,12 +21,8 @@ public class Floor {
         return true;
     }
     
-    public boolean popFromQueue(Integer person) {
-        if (person == null || !queue.contains(person)) {
-            return false;
-        }
-        queue.remove(person);
-        return true;
+    public Integer pollPerson() {
+        return queue.poll();
     }
     
     public String getName() {

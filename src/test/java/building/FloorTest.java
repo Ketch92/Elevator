@@ -72,18 +72,8 @@ class FloorTest {
     void popFromQueue() {
         int size = expectedQueue.size();
         for (int i = 0; i < size; i++) {
-            floor.popFromQueue(i);
+            floor.pollPerson();
         }
         Assertions.assertTrue(floor.getQueue().isEmpty());
-    }
-    
-    @Test
-    void popNull() {
-        Assertions.assertFalse(floor.popFromQueue(null));
-    }
-    
-    @Test
-    void popNonExistingPerson() {
-        Assertions.assertFalse(floor.popFromQueue(1000));
     }
 }
