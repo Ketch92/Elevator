@@ -7,16 +7,17 @@ import elevator.Elevator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
     private Building building;
     private Elevator elevator;
-    private JButton nextBtn;
-    private JButton startOverBtn;
     private JTextField elevatorContainmentTxt;
     private JTextArea buildingLevelsText;
+    private JButton nextBtn;
+    private JButton startOverBtn;
+    private JButton autoPlay;
+    private boolean isAutoplayOn;
     
     public ElevatorSimulation() {
         initializeComponents();
@@ -46,13 +47,15 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
         JPanel centralPanel = new JPanel();
         centralPanel.setLayout(new BorderLayout());
-        
+    
         nextBtn = new JButton("Next step");
         nextBtn.setMargin(new Insets(0, 25, 0, 25));
         nextBtn.addActionListener(this::nextButtonActionPerformed);
         startOverBtn = new JButton("Start again");
         startOverBtn.setMargin(new Insets(0, 25, 0, 25));
         startOverBtn.addActionListener(this::startActionPerformed);
+        autoPlay = new JButton("Auto");
+        autoPlay.addActionListener(this::autoPlayActionPerformed);
         
         elevatorContainmentTxt = new JTextField();
         elevatorContainmentTxt.setEditable(false);
@@ -71,6 +74,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         
         buttonPanel.add(startOverBtn);
         buttonPanel.add(nextBtn);
+        buttonPanel.add(autoPlay);
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
         mainPanel.add(centralPanel, BorderLayout.CENTER);
         centralPanel.add(elevatorContainmentTxt, BorderLayout.NORTH);
@@ -78,6 +82,18 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         this.getContentPane().add(mainPanel);
         
         pack();
+    }
+    
+    private void autoPlayActionPerformed(ActionEvent actionEvent) {
+        if (isAutoplayOn) {
+            isAutoplayOn = false;
+            startOverBtn.setEnabled(true);
+            nextBtn.setEnabled(true);
+        } else {
+            isAutoplayOn = true;
+            startOverBtn.setEnabled(false);
+            nextBtn.setEnabled(false);
+        }
     }
     
     private void update() {
@@ -151,11 +167,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
     private void pickUp() {
         Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
-        if (floor.isEmptyQueue() || !elevator.hasSpace()) {
-            return;
-        }
         Integer person = floor.getQueue().peek();
-        if (person == elevator.getFloorPosition()) {
+        if (floor.isEmptyQueue() || !elevator.hasSpace() || person == elevator.getFloorPosition()) {
             return;
         }
         while (elevator.hasSpace() && !floor.isEmptyQueue()) {

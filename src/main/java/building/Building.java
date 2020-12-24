@@ -35,7 +35,7 @@ public class Building {
         public int getRandomPerson(int level) {
             int person;
             do {
-                person = new Random().nextInt(buildingLevels.length - 1);
+                person = new Random().nextInt(buildingLevels.length);
             } while (person == level);
             return person;
         }
