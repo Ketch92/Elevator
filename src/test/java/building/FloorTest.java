@@ -1,15 +1,16 @@
 package building;
 
+import java.util.ArrayDeque;
+import java.util.List;
+import java.util.Queue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.List;
 
 class FloorTest {
     private String expectedName = "Level 5";
     private int expectedLevel = 5;
-    private List<Integer> expectedQueue = new ArrayList<>(List.of(5, 4, 3, 2, 1, 0));
+    private Queue<Integer> expectedQueue = new ArrayDeque<>(List.of(5, 4, 3, 2, 1, 0));
     private Floor floor = new Floor(expectedLevel, expectedQueue);
     
     @BeforeEach
@@ -42,7 +43,7 @@ class FloorTest {
     
     @Test
     void setQueue() {
-        List<Integer> newQueue = List.of(4, 4, 3, 10, 2, 4);
+        Queue<Integer> newQueue = new ArrayDeque<>(List.of(4, 4, 3, 10, 2, 4));
         floor.setQueue(newQueue);
         Assertions.assertEquals(newQueue, floor.getQueue());
     }

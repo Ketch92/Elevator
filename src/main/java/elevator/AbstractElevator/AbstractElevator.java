@@ -29,7 +29,7 @@ public abstract class AbstractElevator implements Elevate {
     }
 
     @Override
-    public abstract void pickUp(Integer... persons);
+    public abstract void pickUp(Integer persons);
 
     @Override
     public abstract List<Integer> lifted();

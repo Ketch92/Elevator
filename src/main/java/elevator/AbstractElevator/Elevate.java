@@ -1,6 +1,7 @@
 package elevator.AbstractElevator;
 
 import java.util.List;
+import java.util.Queue;
 
 public interface Elevate {
     int MAXIMUM_CAPACITY = 5;
@@ -9,7 +10,7 @@ public interface Elevate {
 
     void moveDown();
 
-    void pickUp(Integer... persons);
+    void pickUp(Integer person);
 
     List<Integer> lifted();
 

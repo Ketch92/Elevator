@@ -5,7 +5,7 @@ import building.Floor;
 import elevator.Elevator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.List;
+import java.util.Queue;
 import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
@@ -30,14 +30,12 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     public static void main(String[] args) {
-        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException
                 | IllegalAccessException | UnsupportedLookAndFeelException e) {
             new RuntimeException("Something went wrong with setting UI", e);
         }
-        
         EventQueue.invokeLater(ElevatorSimulation::run);
     }
     
@@ -121,11 +119,10 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void pickUp() {
-        List<Integer> queue = building.getBuildingLevels()[elevator.getFloorPosition()].getQueue();
-        elevator.pickUp(queue.toArray(Integer[]::new));
-        
+        Queue<Integer> queue = building.getBuildingLevels()[elevator.getFloorPosition()].getQueue();
+        while (elevator.hasSpace() || !queue.isEmpty()) {
+            elevator.pickUp(queue.poll());
+        }
         updateElevatorTextField();
     }
-    
-    
 }

@@ -16,12 +16,15 @@ class ElevatorTest {
         int actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     
-        elevator.pickUp(3, 1);
+        elevator.pickUp(3);
+        elevator.pickUp(2);
         expectedOccupancy = 2;
         actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(expectedOccupancy, actualOccupancy);
     
-        elevator.pickUp(9, 4, 3);
+        elevator.pickUp(9);
+        elevator.pickUp(3);
+        elevator.pickUp(5);
         actualOccupancy = elevator.getOccupancy();
         Assertions.assertEquals(Elevator.MAXIMUM_CAPACITY, actualOccupancy);
     
@@ -33,7 +36,7 @@ class ElevatorTest {
     @Test
     void pickUpWrongPersons() {
         elevator = new Elevator();
-        Integer[] persons = new Integer[]{0, 0, 0};
+        Integer persons = 0;
         elevator.pickUp(persons);
         int expectedOccupancy = 0;
         int actualOccupancy = elevator.getOccupancy();

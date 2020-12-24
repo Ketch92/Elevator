@@ -1,8 +1,6 @@
 package building;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Building {
     private Floor[] buildingLevels;
@@ -26,8 +24,8 @@ public class Building {
             return new Building(this);
         }
         
-        public List<Integer> buildQueue(int level) {
-            List<Integer> queue = new ArrayList<>();
+        public Queue<Integer> buildQueue(int level) {
+            Queue<Integer> queue = new ArrayDeque<>();
             for (int i = 0; i < new Random().nextInt(MAX_QUEUE); i++) {
                 queue.add(getRandomPerson(level));
             }

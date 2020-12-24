@@ -1,13 +1,13 @@
 package building;
 
-import java.util.List;
+import java.util.Queue;
 
 public class Floor {
     private String name;
     private int level;
-    private List<Integer> queue;
+    private Queue<Integer> queue;
     
-    public Floor(int level, List<Integer> queue) {
+    public Floor(int level, Queue<Integer> queue) {
         this.queue = queue;
         this.level = level;
         name = "Level " + level;
@@ -42,11 +42,11 @@ public class Floor {
         name = "Level " + level;
     }
     
-    public List<Integer> getQueue() {
+    public Queue<Integer> getQueue() {
         return queue;
     }
     
-    public void setQueue(List<Integer> queue) {
+    public void setQueue(Queue<Integer> queue) {
         this.queue = queue;
     }
 }

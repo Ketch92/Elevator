@@ -2,7 +2,6 @@ package elevator;
 
 import building.Building;
 import elevator.AbstractElevator.AbstractElevator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +15,9 @@ public class Elevator extends AbstractElevator {
     }
 
     @Override
-    public void pickUp(Integer... persons) {
-        int index = 0;
-        while (hasSpace() && index < persons.length) {
-            if(getFloorPosition() == persons[index]) {
-                index++;
-                continue;
-            }
-            addToContainment(persons[index++]);
+    public void pickUp(Integer person) {
+        if (hasSpace() && person != getFloorPosition()) {
+            addToContainment(person);
         }
     }
 
