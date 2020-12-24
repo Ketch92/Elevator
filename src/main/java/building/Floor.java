@@ -1,6 +1,8 @@
 package building;
 
+import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Floor {
     private String name;
@@ -14,7 +16,7 @@ public class Floor {
     }
     
     public boolean pushToQueue(Integer person) {
-        if (person == null) {
+        if (person == null || person != level) {
             return false;
         }
         queue.add(person);
@@ -22,11 +24,15 @@ public class Floor {
     }
     
     public Integer pollPerson() {
+        if (queue.isEmpty()) {
+            return level;
+        }
         return queue.poll();
     }
     
     public boolean isEmptyQueue() {
-        return queue.isEmpty();
+        return queue.isEmpty() || queue.size() == queue.stream()
+                .filter(i -> i == level).toArray().length;
     }
     
     public String getName() {

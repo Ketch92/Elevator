@@ -50,7 +50,7 @@ class FloorTest {
     
     @Test
     void pushToQueue() {
-        int[] persons = new int[]{7, 8, 9};
+        int[] persons = new int[]{5, 5, 5};
         int i = 0;
         while (i < persons.length) {
             floor.pushToQueue(persons[i]);
