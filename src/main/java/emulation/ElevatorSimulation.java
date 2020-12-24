@@ -2,10 +2,10 @@ package emulation;
 
 import building.Building;
 import building.Floor;
+import elevator.AbstractElevator.Direction;
 import elevator.Elevator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.List;
 import javax.swing.*;
 
@@ -19,7 +19,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private JButton startOverBtn;
     private JTextField elevatorContainmentTxt;
     private JTextArea buildingLevelsText;
-    private int nextBtnCycle;
     private int upperFloorToRun;
     private int lowerFloorToRun;
     
@@ -44,7 +43,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void initializeComponents() {
         building = new Building.BuildingConstructor().build();
         elevator = new Elevator();
-        elevator.getContainment().add(0);
         
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -106,7 +104,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         elevator = new Elevator();
         updateElevatorTextField();
         updateBuildingText();
-        nextBtnCycle = 0;
+        upperFloorToRun = 0;
+        lowerFloorToRun = 0;
     }
     
     private void startActionPerformed(ActionEvent e) {
@@ -114,29 +113,29 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void nextButtonActionPerformed(ActionEvent e) {
-        switch (nextBtnCycle) {
-            case 0:
-                pickUp();
-                release();
-                moveElevator();
-                break;
-        }
+        release();
+        pickUp();
+        moveElevator();
     }
     
     private void moveElevator() {
-        upperFloorToRun = Math.min(upperFloorToRun, elevator.getContainment()
-                .stream().max(Integer::compareTo).get());
-        lowerFloorToRun = Math.max(lowerFloorToRun, elevator.getContainment()
-                .stream().min(Integer::compareTo).get());
-        
+        if (elevator.getDirection().equals(Direction.UP)) {
+            elevator.moveUp();
+            return;
+        }
+        elevator.moveDown();
     }
     
     private void release() {
-        List<Integer> liftedList = elevator.lifted();
         Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
+        if (floor.isEmptyQueue()) {
+            return;
+        }
+        
+        List<Integer> liftedList = elevator.lifted();
         if (!liftedList.isEmpty()) {
             for (Integer person : liftedList) {
-                floor.pushToQueue(person);
+                floor.getQueue().add(person);
             }
         }
         updateElevatorTextField();

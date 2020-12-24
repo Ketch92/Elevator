@@ -43,8 +43,6 @@ public abstract class AbstractElevator implements Elevate {
         return getOccupancy() < MAXIMUM_CAPACITY;
     }
     
-    ;
-    
     public boolean containsPerson(Integer person) {
         return containment.contains(person);
     }
