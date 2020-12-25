@@ -1,6 +1,8 @@
 package building;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.Random;
 
 public class Building {
     private Floor[] buildingLevels;

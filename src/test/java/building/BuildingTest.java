@@ -1,13 +1,13 @@
 package building;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BuildingTest {
-
+    
     private Building building;
     
     @BeforeEach
@@ -35,8 +35,8 @@ class BuildingTest {
             String actualName = floor.getName();
             if (!actualName.equals(expectedName)) {
                 Assertions.fail("Unordered floor naming \n"
-                + "Expected: " + expectedName + "\n"
-                + "Actual: " + actualName);
+                        + "Expected: " + expectedName + "\n"
+                        + "Actual: " + actualName);
             }
             index++;
         }
@@ -64,9 +64,10 @@ class BuildingTest {
             int actualLevel = floor.getLevel();
             for (Integer actualPerson : floor.getQueue()) {
                 if (actualPerson == actualLevel) {
-                    Assertions.fail("The floor queue shouldn't contain persons from the same floor \n"
-                    + "Actual level" + actualLevel + "\n"
-                    + "Found person" + actualPerson);
+                    Assertions.fail("The floor queue shouldn't contain persons"
+                            + " from the same floor \n"
+                            + "Actual level" + actualLevel + "\n"
+                            + "Found person" + actualPerson);
                 }
                 if (actualPerson > building.getBuildingLevels().length - 1) {
                     Assertions.fail("Found person " + actualPerson

@@ -2,12 +2,20 @@ package emulation;
 
 import building.Building;
 import building.Floor;
-import elevator.AbstractElevator.Direction;
 import elevator.Elevator;
-import java.awt.*;
+import elevator.abstractelevator.Direction;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
     private Building building;
@@ -43,7 +51,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-        JPanel buttonPanel = new JPanel();
     
         JPanel centralPanel = new JPanel();
         centralPanel.setLayout(new BorderLayout());
@@ -56,22 +63,23 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         startOverBtn.addActionListener(this::startActionPerformed);
         autoPlay = new JButton("Auto");
         autoPlay.addActionListener(this::autoPlayActionPerformed);
-        
+    
         elevatorContainmentTxt = new JTextField();
         elevatorContainmentTxt.setEditable(false);
-        elevatorContainmentTxt.setToolTipText("This text shows the people" +
-                " that elevator currently carrying");
+        elevatorContainmentTxt.setToolTipText("This text shows the people"
+                + " that elevator currently carrying");
         updateElevatorTextField();
-        
+    
         buildingLevelsText = new JTextArea();
         buildingLevelsText.setEditable(false);
         buildingLevelsText.setVisible(true);
         updateBuildingText();
-        
+    
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Elevator");
         this.setPreferredSize(new Dimension(300, 500));
-        
+    
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(startOverBtn);
         buttonPanel.add(nextBtn);
         buttonPanel.add(autoPlay);

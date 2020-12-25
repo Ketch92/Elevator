@@ -1,9 +1,8 @@
 package elevator;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 class ElevatorTest {
     private Elevator elevator;
@@ -59,7 +58,7 @@ class ElevatorTest {
         
         for (int i = 0; i < 10; i++) {
             elevator.setFloorPosition(i);
-            if(elevator.getContainment().contains(i)) {
+            if (elevator.getContainment().contains(i)) {
                 liftedActual = elevator.lifted();
                 liftedExpected = List.of(i);
                 Assertions.assertEquals(liftedExpected, liftedActual);

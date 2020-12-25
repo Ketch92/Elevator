@@ -1,7 +1,6 @@
-package elevator.AbstractElevator;
+package elevator.abstractelevator;
 
 import java.util.List;
-import java.util.Queue;
 
 public interface Elevate {
     int MAXIMUM_CAPACITY = 5;

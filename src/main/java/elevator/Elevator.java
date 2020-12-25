@@ -1,6 +1,6 @@
 package elevator;
 
-import elevator.AbstractElevator.AbstractElevator;
+import elevator.abstractelevator.AbstractElevator;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,8 +1,6 @@
 package building;
 
-import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 public class Floor {
     private String name;

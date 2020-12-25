@@ -1,4 +1,4 @@
-package elevator.AbstractElevator;
+package elevator.abstractelevator;
 
 import java.util.ArrayList;
 import java.util.List;
