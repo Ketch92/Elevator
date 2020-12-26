@@ -26,6 +26,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private JButton startOverBtn;
     private JButton autoPlay;
     private boolean isAutoplayOn;
+    private int upperFloorToRun;
+    private int lowerFloorToRun;
     
     public ElevatorSimulation() {
         initializeComponents();
@@ -48,13 +50,13 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void initializeComponents() {
         building = new Building.BuildingConstructor().build();
         elevator = new Elevator();
-    
+        
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-    
+        
         JPanel centralPanel = new JPanel();
         centralPanel.setLayout(new BorderLayout());
-    
+        
         nextBtn = new JButton("Next step");
         nextBtn.setMargin(new Insets(0, 25, 0, 25));
         nextBtn.addActionListener(this::nextButtonActionPerformed);
@@ -63,22 +65,23 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         startOverBtn.addActionListener(this::startActionPerformed);
         autoPlay = new JButton("Auto");
         autoPlay.addActionListener(this::autoPlayActionPerformed);
-    
+        autoPlay.setMargin(new Insets(0, 25, 0, 25));
+        
         elevatorContainmentTxt = new JTextField();
         elevatorContainmentTxt.setEditable(false);
         elevatorContainmentTxt.setToolTipText("This text shows the people"
                 + " that elevator currently carrying");
         updateElevatorTextField();
-    
+        
         buildingLevelsText = new JTextArea();
         buildingLevelsText.setEditable(false);
         buildingLevelsText.setVisible(true);
         updateBuildingText();
-    
+        
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Elevator");
-        this.setPreferredSize(new Dimension(300, 500));
-    
+        this.setPreferredSize(new Dimension(350, 500));
+        
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(startOverBtn);
         buttonPanel.add(nextBtn);
@@ -127,8 +130,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void startActionPerformed(ActionEvent e) {
         building = new Building.BuildingConstructor().build();
         elevator = new Elevator();
-        int upperFloorToRun = 0;
-        int lowerFloorToRun = 0;
+        upperFloorToRun = 0;
+        lowerFloorToRun = 0;
         update();
     }
     
@@ -139,17 +142,11 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void runElevator() {
         release();
         pickUp();
+        setLevelsToRun();
         moveElevator();
     }
     
     private void moveElevator() {
-        if (elevator.getFloorPosition() == building.getBuildingLevels().length - 1) {
-            elevator.setDirection(Direction.DOWN);
-        }
-        if (elevator.getFloorPosition() == 0) {
-            elevator.setDirection(Direction.UP);
-        }
-        
         if (elevator.getDirection().equals(Direction.UP)) {
             elevator.moveUp();
             return;
@@ -183,5 +180,25 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             elevator.pickUp(floor.pollPerson());
         }
         update();
+    }
+    
+    private void setLevelsToRun() {
+        lowerFloorToRun = elevator.getOccupancy() != 0 ?
+                elevator.getContainment().stream().min(Integer::compareTo).get()
+                : 0;
+        upperFloorToRun = elevator.getOccupancy() != 0 ?
+                elevator.getContainment().stream().max(Integer::compareTo).get()
+                : building.getBuildingLevels().length - 1;
+        if (elevator.getFloorPosition() == building.getBuildingLevels().length - 1
+                || (elevator.getDirection().equals(Direction.UP)
+                && elevator.getFloorPosition() == upperFloorToRun)) {
+            elevator.setDirection(Direction.DOWN);
+            return;
+        }
+        if (elevator.getFloorPosition() == 0
+                || (elevator.getDirection().equals(Direction.DOWN)
+                && elevator.getFloorPosition() == lowerFloorToRun)) {
+            elevator.setDirection(Direction.UP);
+        }
     }
 }
