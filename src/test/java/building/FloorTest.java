@@ -1,5 +1,6 @@
 package building;
 
+import elevator.abstractelevator.Direction;
 import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
@@ -72,7 +73,7 @@ class FloorTest {
     void popFromQueue() {
         int size = expectedQueue.size();
         for (int i = 0; i < size; i++) {
-            floor.pollPerson();
+            floor.pollPerson(Direction.UP);
         }
         Assertions.assertTrue(floor.getQueue().isEmpty());
     }

@@ -142,8 +142,9 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void runElevator() {
         release();
         pickUp();
-        setLevelsToRun();
         moveElevator();
+        update();
+        setLevelsToRun();
     }
     
     private void moveElevator() {
@@ -152,7 +153,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             return;
         }
         elevator.moveDown();
-        update();
     }
     
     private void release() {
@@ -167,27 +167,28 @@ public class ElevatorSimulation extends javax.swing.JFrame {
                 floor.getQueue().add(person);
             }
         }
-        update();
     }
     
     private void pickUp() {
         Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
         Integer person = floor.getQueue().peek();
-        if (floor.isEmptyQueue() || !elevator.hasSpace() || person == elevator.getFloorPosition()) {
+        if (floor.isEmptyQueue(elevator.getDirection())
+                || !elevator.hasSpace()
+                || person == elevator.getFloorPosition()) {
             return;
         }
-        while (elevator.hasSpace() && !floor.isEmptyQueue()) {
-            elevator.pickUp(floor.pollPerson());
+        while (elevator.hasSpace()
+                && !floor.isEmptyQueue(elevator.getDirection())) {
+            elevator.pickUp(floor.pollPerson(elevator.getDirection()));
         }
-        update();
     }
     
     private void setLevelsToRun() {
-        lowerFloorToRun = elevator.getOccupancy() != 0 ?
-                elevator.getContainment().stream().min(Integer::compareTo).get()
+        lowerFloorToRun = elevator.getOccupancy() != 0
+                ? elevator.getContainment().stream().min(Integer::compareTo).get()
                 : 0;
-        upperFloorToRun = elevator.getOccupancy() != 0 ?
-                elevator.getContainment().stream().max(Integer::compareTo).get()
+        upperFloorToRun = elevator.getOccupancy() != 0
+                ? elevator.getContainment().stream().max(Integer::compareTo).get()
                 : building.getBuildingLevels().length - 1;
         if (elevator.getFloorPosition() == building.getBuildingLevels().length - 1
                 || (elevator.getDirection().equals(Direction.UP)

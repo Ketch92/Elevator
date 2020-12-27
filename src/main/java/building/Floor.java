@@ -1,5 +1,6 @@
 package building;
 
+import elevator.abstractelevator.Direction;
 import java.util.Queue;
 
 public class Floor {
@@ -21,16 +22,18 @@ public class Floor {
         return true;
     }
     
-    public Integer pollPerson() {
+    public Integer pollPerson(Direction callElevatorButton) {
         if (queue.isEmpty()) {
             return level;
         }
         return queue.poll();
     }
     
-    public boolean isEmptyQueue() {
-        return queue.isEmpty() || queue.size() == queue.stream()
-                .filter(i -> i == level).toArray().length;
+    public boolean isEmptyQueue(Direction callElevatorButton) {
+        boolean wasElevatorCalled = callElevatorButton.equals(Direction.UP)
+                ? queue.stream().filter(i -> i > level).toArray().length == 0
+                : queue.stream().filter(i -> i < level).toArray().length == 0;
+        return wasElevatorCalled || queue.isEmpty();
     }
     
     public String getName() {
