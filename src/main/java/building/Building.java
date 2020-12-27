@@ -3,12 +3,25 @@ package building;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Building {
     private Floor[] buildingLevels;
     
     private Building(BuildingConstructor builder) {
         buildingLevels = builder.buildingLevels;
+    }
+    
+    public boolean areQueuesEmpty() {
+        for (Floor floor : buildingLevels) {
+            if (floor.getQueue().stream()
+                    .filter(i -> i == floor.getLevel())
+                    .collect(Collectors.toCollection(ArrayDeque::new))
+                    .size() != floor.getQueue().size()) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public Floor[] getBuildingLevels() {

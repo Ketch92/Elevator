@@ -99,7 +99,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             isAutoplayOn = true;
             startOverBtn.setEnabled(false);
             nextBtn.setEnabled(false);
-            java.util.Timer timer = new Timer();
+            Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -142,13 +142,15 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void runElevator() {
-        release();
-        update();
-        pickUp();
-        update();
-        moveElevator();
-        update();
-        setLevelsToRun();
+        if (!building.areQueuesEmpty() || !elevator.getContainment().isEmpty()){
+            release();
+            update();
+            pickUp();
+            update();
+            moveElevator();
+            update();
+            setLevelsToRun();
+        }
     }
     
     private void moveElevator() {
