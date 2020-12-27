@@ -4,18 +4,10 @@ import building.Building;
 import building.Floor;
 import elevator.Elevator;
 import elevator.abstractelevator.Direction;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
     private Building building;
@@ -100,6 +92,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             isAutoplayOn = false;
             startOverBtn.setEnabled(true);
             nextBtn.setEnabled(true);
+            
         } else {
             isAutoplayOn = true;
             startOverBtn.setEnabled(false);
@@ -141,7 +134,9 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
     private void runElevator() {
         release();
+        update();
         pickUp();
+        update();
         moveElevator();
         update();
         setLevelsToRun();
