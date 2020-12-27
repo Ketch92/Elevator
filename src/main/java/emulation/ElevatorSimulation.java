@@ -23,14 +23,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private int upperFloorToRun;
     private int lowerFloorToRun;
     
-    public ElevatorSimulation() {
-        initializeComponents();
-    }
-    
-    private static void run() {
-        new ElevatorSimulation().setVisible(true);
-    }
-    
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -39,6 +31,14 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             throw new RuntimeException("Something went wrong with setting UI", e);
         }
         EventQueue.invokeLater(ElevatorSimulation::run);
+    }
+    
+    private ElevatorSimulation() {
+        initializeComponents();
+    }
+    
+    private static void run() {
+        new ElevatorSimulation().setVisible(true);
     }
     
     private void initializeComponents() {
@@ -109,6 +109,18 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         }
     }
     
+    private void startActionPerformed(ActionEvent e) {
+        building = new Building.BuildingConstructor().build();
+        elevator = new Elevator();
+        upperFloorToRun = 0;
+        lowerFloorToRun = 0;
+        update();
+    }
+    
+    private void nextButtonActionPerformed(ActionEvent e) {
+        runElevator();
+    }
+    
     private void update() {
         updateElevatorTextField();
         updateBuildingText();
@@ -128,18 +140,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private void updateElevatorTextField() {
         elevatorContainmentTxt.setText("Level " + elevator.getFloorPosition()
                 + "  " + elevator.getContainment().toString());
-    }
-    
-    private void startActionPerformed(ActionEvent e) {
-        building = new Building.BuildingConstructor().build();
-        elevator = new Elevator();
-        upperFloorToRun = 0;
-        lowerFloorToRun = 0;
-        update();
-    }
-    
-    private void nextButtonActionPerformed(ActionEvent e) {
-        runElevator();
     }
     
     private void runElevator() {
