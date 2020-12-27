@@ -1,7 +1,9 @@
 package building;
 
 import elevator.abstractelevator.Direction;
+import java.util.ArrayDeque;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Floor {
     private String name;
@@ -23,10 +25,22 @@ public class Floor {
     }
     
     public Integer pollPerson(Direction callElevatorButton) {
-        if (queue.isEmpty()) {
+        if (isEmptyQueue(callElevatorButton)) {
             return level;
         }
-        return queue.poll();
+        Queue<Integer> persons;
+        if (callElevatorButton.equals(Direction.UP)) {
+            persons = queue.stream()
+                    .filter(i -> i > level).collect(Collectors.toCollection(ArrayDeque::new));
+            Integer person = persons.poll();
+            queue.remove(person);
+            return person;
+        }
+        persons = queue.stream()
+                .filter(i -> i < level).collect(Collectors.toCollection(ArrayDeque::new));
+        Integer person = persons.poll();
+        queue.remove(person);
+        return person;
     }
     
     public boolean isEmptyQueue(Direction callElevatorButton) {
