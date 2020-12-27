@@ -7,6 +7,8 @@ import elevator.abstractelevator.Direction;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.*;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
@@ -97,6 +99,13 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             isAutoplayOn = true;
             startOverBtn.setEnabled(false);
             nextBtn.setEnabled(false);
+            java.util.Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runElevator();
+                }
+            }, 50, 3000);
         }
     }
     
