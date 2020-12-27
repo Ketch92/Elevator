@@ -4,12 +4,20 @@ import building.Building;
 import building.Floor;
 import elevator.Elevator;
 import elevator.abstractelevator.Direction;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class ElevatorSimulation extends javax.swing.JFrame {
     private Building building;
@@ -23,6 +31,10 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     private int upperFloorToRun;
     private int lowerFloorToRun;
     
+    private ElevatorSimulation() {
+        initializeComponents();
+    }
+    
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -31,10 +43,6 @@ public class ElevatorSimulation extends javax.swing.JFrame {
             throw new RuntimeException("Something went wrong with setting UI", e);
         }
         EventQueue.invokeLater(ElevatorSimulation::run);
-    }
-    
-    private ElevatorSimulation() {
-        initializeComponents();
     }
     
     private static void run() {
@@ -143,7 +151,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void runElevator() {
-        if (!building.areQueuesEmpty() || !elevator.getContainment().isEmpty()){
+        if (!building.areQueuesEmpty() || !elevator.getContainment().isEmpty()) {
             release();
             update();
             pickUp();
