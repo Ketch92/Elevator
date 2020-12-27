@@ -105,7 +105,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
                 public void run() {
                     runElevator();
                 }
-            }, 50, 3000);
+            }, 50, 2000);
         }
     }
     
@@ -116,9 +116,10 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     
     private void updateBuildingText() {
         buildingLevelsText.setText("");
-        Floor[] buildingLevels = building.getBuildingLevels();
+        Floor[] buildingLevels = building.getLevels();
+        Floor floor;
         for (int i = buildingLevels.length - 1; i >= 0; i--) {
-            Floor floor = buildingLevels[i];
+            floor = buildingLevels[i];
             buildingLevelsText.append(floor.getName() + " ");
             buildingLevelsText.append(floor.getQueue().toString() + "\n");
         }
@@ -165,7 +166,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         if (elevator.getContainment().isEmpty()) {
             return;
         }
-        Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
+        Floor floor = building.getLevels()[elevator.getFloorPosition()];
         
         List<Integer> liftedList = elevator.lifted();
         if (!liftedList.isEmpty()) {
@@ -176,7 +177,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
     }
     
     private void pickUp() {
-        Floor floor = building.getBuildingLevels()[elevator.getFloorPosition()];
+        Floor floor = building.getLevels()[elevator.getFloorPosition()];
         Integer person = floor.getQueue().peek();
         if (floor.isEmptyQueue(elevator.getDirection())
                 || !elevator.hasSpace()
@@ -195,8 +196,8 @@ public class ElevatorSimulation extends javax.swing.JFrame {
                 : 0;
         upperFloorToRun = elevator.getOccupancy() != 0
                 ? elevator.getContainment().stream().max(Integer::compareTo).get()
-                : building.getBuildingLevels().length - 1;
-        if (elevator.getFloorPosition() == building.getBuildingLevels().length - 1
+                : building.getLevels().length - 1;
+        if (elevator.getFloorPosition() == building.getLevels().length - 1
                 || (elevator.getDirection().equals(Direction.UP)
                 && elevator.getFloorPosition() == upperFloorToRun)) {
             elevator.setDirection(Direction.DOWN);

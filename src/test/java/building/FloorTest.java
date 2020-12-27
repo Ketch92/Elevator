@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class FloorTest {
     private String expectedName = "Level 5";
     private int expectedLevel = 5;
-    private Queue<Integer> expectedQueue = new ArrayDeque<>(List.of(5, 4, 3, 2, 1, 0));
+    private Queue<Integer> expectedQueue = new ArrayDeque<>(List.of(0, 4, 3, 2, 1, 0));
     private Floor floor = new Floor(expectedLevel, expectedQueue);
     
     @BeforeEach
@@ -71,10 +71,33 @@ class FloorTest {
     
     @Test
     void popFromQueue() {
-        int size = expectedQueue.size();
-        for (int i = 0; i < size; i++) {
+        floor = new Floor(0, expectedQueue);
+        int expectedSize = 2;
+        for (int i = 0; i < 10; i++) {
             floor.pollPerson(Direction.UP);
         }
-        Assertions.assertTrue(floor.getQueue().isEmpty());
+        int actualSize = expectedQueue.size();
+        Assertions.assertEquals(expectedSize, actualSize);
+    }
+    
+    @Test
+    void popNoneFromQueue() {
+        int expectedSize = 6;
+        for (int i = 0; i < 10; i++) {
+            floor.pollPerson(Direction.UP);
+        }
+        int actualSize = expectedQueue.size();
+        Assertions.assertEquals(expectedSize, actualSize);
+    }
+    
+    @Test
+    void popAllFromQueue() {
+        floor = new Floor(10, expectedQueue);
+        int expectedSize = 0;
+        for (int i = 0; i < 10; i++) {
+            floor.pollPerson(Direction.DOWN);
+        }
+        int actualSize = expectedQueue.size();
+        Assertions.assertEquals(expectedSize, actualSize);
     }
 }

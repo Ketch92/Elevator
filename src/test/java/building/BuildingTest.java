@@ -18,7 +18,7 @@ class BuildingTest {
     @Test
     void numberOfFloors() {
         for (int i = 0; i < 20; i++) {
-            int actual = building.getBuildingLevels().length;
+            int actual = building.getLevels().length;
             if (actual < 5 || actual > 20) {
                 fail("The number of floors in the building isn't correct \n"
                         + "Actual: " + actual);
@@ -30,7 +30,7 @@ class BuildingTest {
     @Test
     void levelNaming() {
         int index = 0;
-        for (Floor floor : building.getBuildingLevels()) {
+        for (Floor floor : building.getLevels()) {
             String expectedName = "Level " + index;
             String actualName = floor.getName();
             if (!actualName.equals(expectedName)) {
@@ -45,7 +45,7 @@ class BuildingTest {
     @Test
     void sizeOfQueue() {
         for (int i = 0; i < 10; i++) {
-            for (Floor floor : building.getBuildingLevels()) {
+            for (Floor floor : building.getLevels()) {
                 int actual = floor.getQueue().size();
                 if (actual > 10) {
                     fail("The number of floors in the building isn't correct \n"
@@ -59,8 +59,8 @@ class BuildingTest {
     
     @Test
     void queueElements() {
-        for (int i = 0; i < building.getBuildingLevels().length; i++) {
-            Floor floor = building.getBuildingLevels()[i];
+        for (int i = 0; i < building.getLevels().length; i++) {
+            Floor floor = building.getLevels()[i];
             int actualLevel = floor.getLevel();
             for (Integer actualPerson : floor.getQueue()) {
                 if (actualPerson == actualLevel) {
@@ -69,9 +69,9 @@ class BuildingTest {
                             + "Actual level" + actualLevel + "\n"
                             + "Found person" + actualPerson);
                 }
-                if (actualPerson > building.getBuildingLevels().length - 1) {
+                if (actualPerson > building.getLevels().length - 1) {
                     Assertions.fail("Found person " + actualPerson
-                            + " with number of floors" + building.getBuildingLevels().length);
+                            + " with number of floors" + building.getLevels().length);
                 }
             }
         }
@@ -79,7 +79,7 @@ class BuildingTest {
     
     @Test
     void nullContaining() {
-        for (Floor floor : building.getBuildingLevels()) {
+        for (Floor floor : building.getLevels()) {
             if (floor == null) {
                 Assertions.fail("A null floor was found in building");
             }
