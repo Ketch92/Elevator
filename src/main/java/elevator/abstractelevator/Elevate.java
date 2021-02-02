@@ -11,7 +11,7 @@ public interface Elevate {
 
     void pickUp(Integer person);
 
-    List<Integer> lifted();
+    List<Integer> lift();
 
     boolean hasSpace();
 }

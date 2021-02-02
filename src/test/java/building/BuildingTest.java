@@ -7,7 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BuildingTest {
-    
+    private static final int EXPECTED_MIN_NUMB_FLOORS = 5;
+    private static final int EXPECTED_MAX_NUMB_FLOORS = 5;
     private Building building;
     
     @BeforeEach
@@ -19,26 +20,11 @@ class BuildingTest {
     void numberOfFloors() {
         for (int i = 0; i < 20; i++) {
             int actual = building.getLevels().length;
-            if (actual < 5 || actual > 20) {
+            if (actual < EXPECTED_MIN_NUMB_FLOORS
+                || actual > EXPECTED_MAX_NUMB_FLOORS) {
                 fail("The number of floors in the building isn't correct \n"
                         + "Actual: " + actual);
             }
-            setUp();
-        }
-    }
-    
-    @Test
-    void levelNaming() {
-        int index = 0;
-        for (Floor floor : building.getLevels()) {
-            String expectedName = "Level " + index;
-            String actualName = floor.getName();
-            if (!actualName.equals(expectedName)) {
-                Assertions.fail("Unordered floor naming \n"
-                        + "Expected: " + expectedName + "\n"
-                        + "Actual: " + actualName);
-            }
-            index++;
         }
     }
     
@@ -53,7 +39,6 @@ class BuildingTest {
                             + "expected value from 0 to 10");
                 }
             }
-            setUp();
         }
     }
     
@@ -72,20 +57,6 @@ class BuildingTest {
                 if (actualPerson > building.getLevels().length - 1) {
                     Assertions.fail("Found person " + actualPerson
                             + " with number of floors" + building.getLevels().length);
-                }
-            }
-        }
-    }
-    
-    @Test
-    void nullContaining() {
-        for (Floor floor : building.getLevels()) {
-            if (floor == null) {
-                Assertions.fail("A null floor was found in building");
-            }
-            for (Integer person : floor.getQueue()) {
-                if (person == null) {
-                    Assertions.fail("A null person was found in building " + floor.getName());
                 }
             }
         }

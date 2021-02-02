@@ -43,12 +43,12 @@ class ElevatorTest {
     }
     
     @Test
-    void lifted() {
+    void liftCheckOnCorrectFiltering() {
         elevator = new Elevator();
         elevator.getContainment().addAll(List.of(2, 4, 4, 6));
         elevator.setFloorPosition(4);
         
-        List<Integer> liftedActual = elevator.lifted();
+        List<Integer> liftedActual = elevator.lift();
         List<Integer> liftedExpected = List.of(4, 4);
         Assertions.assertEquals(liftedExpected, liftedActual);
         
@@ -59,12 +59,12 @@ class ElevatorTest {
         for (int i = 0; i < 10; i++) {
             elevator.setFloorPosition(i);
             if (elevator.getContainment().contains(i)) {
-                liftedActual = elevator.lifted();
+                liftedActual = elevator.lift();
                 liftedExpected = List.of(i);
                 Assertions.assertEquals(liftedExpected, liftedActual);
                 continue;
             }
-            liftedActual = elevator.lifted();
+            liftedActual = elevator.lift();
             liftedExpected = List.of();
             Assertions.assertEquals(liftedExpected, liftedActual);
         }

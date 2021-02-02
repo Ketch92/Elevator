@@ -14,7 +14,7 @@ public class Elevator extends AbstractElevator {
     }
 
     @Override
-    public List<Integer> lifted() {
+    public List<Integer> lift() {
         List<Integer> liftedPersons = new ArrayList<>();
         while (containsPerson(getFloorPosition())) {
             liftedPersons.add(getFloorPosition());

@@ -20,22 +20,10 @@ class FloorTest {
     }
     
     @Test
-    void getName() {
-        Assertions.assertEquals(expectedName, floor.getName());
-    }
-    
-    @Test
     void getLevel() {
         Assertions.assertEquals(expectedLevel, floor.getLevel());
     }
     
-    @Test
-    void setLevel() {
-        int newLevel = 10;
-        floor.setLevel(newLevel);
-        Assertions.assertEquals(newLevel, floor.getLevel());
-        Assertions.assertEquals("Level " + newLevel, floor.getName());
-    }
     
     @Test
     void getQueue() {
@@ -52,21 +40,14 @@ class FloorTest {
     @Test
     void pushToQueue() {
         int[] persons = new int[]{5, 5, 5};
-        int i = 0;
-        while (i < persons.length) {
+        for (int i = 0; i < persons.length; i++) {
             floor.pushToQueue(persons[i]);
-            i++;
         }
         for (int person : persons) {
             if (!floor.getQueue().contains(person)) {
                 Assertions.fail("Persons added to the queue weren't found there");
             }
         }
-    }
-    
-    @Test
-    void pushNull() {
-        Assertions.assertFalse(floor.pushToQueue(null));
     }
     
     @Test

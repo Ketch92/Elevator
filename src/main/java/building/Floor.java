@@ -6,22 +6,19 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class Floor {
-    private String name;
-    private int level;
+    private final Integer level;
     private Queue<Integer> queue;
     
     public Floor(int level, Queue<Integer> queue) {
         this.queue = queue;
         this.level = level;
-        name = "Level " + level;
     }
     
-    public boolean pushToQueue(Integer person) {
-        if (person == null || person != level) {
-            return false;
+    public void pushToQueue(int person) {
+        if (person != level) {
+            return;
         }
         queue.add(person);
-        return true;
     }
     
     public Integer pollPerson(Direction callElevatorButton) {
@@ -50,17 +47,8 @@ public class Floor {
         return wasElevatorCalled || queue.isEmpty();
     }
     
-    public String getName() {
-        return name;
-    }
-    
     public int getLevel() {
         return level;
-    }
-    
-    public void setLevel(int level) {
-        this.level = level;
-        name = "Level " + level;
     }
     
     public Queue<Integer> getQueue() {

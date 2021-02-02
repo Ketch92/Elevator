@@ -140,7 +140,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         Floor floor;
         for (int i = buildingLevels.length - 1; i >= 0; i--) {
             floor = buildingLevels[i];
-            buildingLevelsText.append(floor.getName() + " ");
+            buildingLevelsText.append("Level " + floor.getLevel() + " ");
             buildingLevelsText.append(floor.getQueue().toString() + "\n");
         }
     }
@@ -176,7 +176,7 @@ public class ElevatorSimulation extends javax.swing.JFrame {
         }
         Floor floor = building.getLevels()[elevator.getFloorPosition()];
         
-        List<Integer> liftedList = elevator.lifted();
+        List<Integer> liftedList = elevator.lift();
         if (!liftedList.isEmpty()) {
             for (Integer person : liftedList) {
                 floor.getQueue().add(person);

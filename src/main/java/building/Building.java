@@ -5,14 +5,14 @@ import java.util.Queue;
 import java.util.Random;
 
 public class Building {
-    private Floor[] buildinglevels;
+    private Floor[] buildingLevels;
     
     private Building(BuildingConstructor builder) {
-        buildinglevels = builder.buildingLevels;
+        buildingLevels = builder.buildingLevels;
     }
     
     public boolean areQueuesEmpty() {
-        for (Floor floor : buildinglevels) {
+        for (Floor floor : buildingLevels) {
             if (!floor.getQueue().stream().allMatch(i -> i == floor.getLevel())) {
                 return false;
             }
@@ -21,7 +21,7 @@ public class Building {
     }
     
     public Floor[] getLevels() {
-        return buildinglevels;
+        return buildingLevels;
     }
     
     public static class BuildingConstructor {
