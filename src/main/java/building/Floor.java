@@ -1,39 +1,61 @@
 package building;
 
-import java.util.List;
+import elevator.abstractelevator.Direction;
+import java.util.ArrayDeque;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 public class Floor {
-    private String name;
-    private int level;
-    private List<Integer> queue;
-    private boolean isQueueEmpty;
-
-    public Floor(int level, List<Integer> queue) {
+    private final Integer level;
+    private Queue<Integer> queue;
+    
+    public Floor(int level, Queue<Integer> queue) {
         this.queue = queue;
         this.level = level;
     }
-
-    public String getName() {
-        return name;
+    
+    public void pushToQueue(int person) {
+        if (person != level) {
+            return;
+        }
+        queue.add(person);
     }
-
+    
+    public Integer pollPerson(Direction callElevatorButton) {
+        if (isEmptyQueue(callElevatorButton)) {
+            return level;
+        }
+        Queue<Integer> persons;
+        if (callElevatorButton.equals(Direction.UP)) {
+            persons = queue.stream()
+                    .filter(i -> i > level).collect(Collectors.toCollection(ArrayDeque::new));
+            Integer person = persons.poll();
+            queue.remove(person);
+            return person;
+        }
+        persons = queue.stream()
+                .filter(i -> i < level).collect(Collectors.toCollection(ArrayDeque::new));
+        Integer person = persons.poll();
+        queue.remove(person);
+        return person;
+    }
+    
+    public boolean isEmptyQueue(Direction callElevatorButton) {
+        boolean wasElevatorCalled = callElevatorButton.equals(Direction.UP)
+                ? queue.stream().filter(i -> i > level).toArray().length == 0
+                : queue.stream().filter(i -> i < level).toArray().length == 0;
+        return wasElevatorCalled || queue.isEmpty();
+    }
+    
     public int getLevel() {
         return level;
     }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public List<Integer> getQueue() {
+    
+    public Queue<Integer> getQueue() {
         return queue;
     }
-
-    public void setQueue(List<Integer> queue) {
+    
+    public void setQueue(Queue<Integer> queue) {
         this.queue = queue;
-    }
-
-    public boolean isQueueEmpty() {
-        return queue.isEmpty();
     }
 }
